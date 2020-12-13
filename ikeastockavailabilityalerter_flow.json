@@ -1,0 +1,219 @@
+[
+    {
+        "id": "8650fec8.92341",
+        "type": "tab",
+        "label": "IkeaStockCheckFlow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "7187352f.41b9bc",
+        "type": "inject",
+        "z": "8650fec8.92341",
+        "name": "",
+        "props": [],
+        "repeat": "1800",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "01",
+        "topic": "",
+        "payloadType": "str",
+        "x": 270,
+        "y": 300,
+        "wires": [
+            [
+                "18c4ee62.51fb32"
+            ]
+        ]
+    },
+    {
+        "id": "18c4ee62.51fb32",
+        "type": "http request",
+        "z": "8650fec8.92341",
+        "name": "Call IKEA service",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://www.ikea.com/in/en/iows/catalog/availability/90313841/",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 410,
+        "y": 380,
+        "wires": [
+            [
+                "a393ca69.710f88",
+                "7ae5a838.51ffb8"
+            ]
+        ]
+    },
+    {
+        "id": "a393ca69.710f88",
+        "type": "debug",
+        "z": "8650fec8.92341",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "7ae5a838.51ffb8",
+        "type": "xml",
+        "z": "8650fec8.92341",
+        "name": "XML to JSON",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 660,
+        "y": 380,
+        "wires": [
+            [
+                "71aa60e3.ef09f",
+                "63bd356.13b68cc"
+            ]
+        ]
+    },
+    {
+        "id": "71aa60e3.ef09f",
+        "type": "debug",
+        "z": "8650fec8.92341",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "63bd356.13b68cc",
+        "type": "function",
+        "z": "8650fec8.92341",
+        "name": "Parse and Retreive stock quantity",
+        "func": "\nvar stock= msg.payload[\"ir:ikea-rest\"].availability[0].localStore[1].stock[0].availableStock[0];\nmsg.payload = parseInt(stock) ;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 940,
+        "y": 380,
+        "wires": [
+            [
+                "a5b9546f.039758",
+                "73ea06ba.822e78"
+            ]
+        ]
+    },
+    {
+        "id": "a5b9546f.039758",
+        "type": "debug",
+        "z": "8650fec8.92341",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "73ea06ba.822e78",
+        "type": "switch",
+        "z": "8650fec8.92341",
+        "name": "Output Switch",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "lte",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1220,
+        "y": 380,
+        "wires": [
+            [
+                "f9f80366.7bda4",
+                "43cac3bf.b2ca2c"
+            ],
+            [
+                "d0725df5.9107d"
+            ]
+        ]
+    },
+    {
+        "id": "f9f80366.7bda4",
+        "type": "cast-to-client",
+        "z": "8650fec8.92341",
+        "name": "",
+        "url": "",
+        "contentType": "",
+        "message": "ALERT !! ALERT !! Floor uplighter stock available on IKEA",
+        "language": "en",
+        "ip": "192.168.1.3",
+        "port": "",
+        "volume": "80",
+        "x": 1450,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d0725df5.9107d",
+        "type": "debug",
+        "z": "8650fec8.92341",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1430,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "43cac3bf.b2ca2c",
+        "type": "debug",
+        "z": "8650fec8.92341",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1350,
+        "y": 220,
+        "wires": []
+    }
+]
