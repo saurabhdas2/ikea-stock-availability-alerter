@@ -9,6 +9,6 @@ A Home Automation System, using Node Red and Google Home, to alert on Stock Avai
 * It's implemented with Node-Red processing flows.
 
 
-# Screenshot of the Node Red Flow
+## Screenshot of the Node Red Flow
 <img src="ikeastockavailability_noderedflow.JPG" alt="flow"/>
 
