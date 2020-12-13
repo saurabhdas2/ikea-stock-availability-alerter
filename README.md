@@ -12,7 +12,3 @@ A Home Automation System, using Node Red and Google Home, to alert on Stock Avai
 # Screenshot of the Node Red Flow
 <img src="ikeastockavailability_noderedflow.JPG" alt="flow"/>
 
-# Flow code
-```
-[{"id":"d0725df5.9107d","type":"debug","z":"8650fec8.92341","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","statusVal":"","statusType":"auto","x":1430,"y":440,"wires":[]}]
-```
